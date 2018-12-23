@@ -1,11 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <Servo.h>
-const char* ssid = "Rocket";
-const char* password = "mayurmototushar";
-const char* host = "veronica.wgmaffusau.us-east-2.elasticbeanstalk.com";
 Servo ESC1, ESC2, ESC3, ESC4; 
-String url = "";
-WiFiServer server(80);
 int currentSpeed = 0;
 
 int normalize(int a){
@@ -80,26 +75,6 @@ void setup() {
   
   server.begin();
   
-  String url = "/?query=10";
-  url += "&ip=";
-  url += WiFi.localIP().toString();
-  
-  WiFiClient client1;
-  const int httpPort = 80;
-  if (!client1.connect(host, httpPort))
-      return;
-
-  client1.print(String("GET ") + url + " HTTP/1.1\r\n" +
-    "Host: " + host + "\r\n" +
-    "Connection: close\r\n\r\n");
-  
-  unsigned long timeout = millis();
-  while (client1.available() == 0) {
-    if (millis() - timeout > 5000) {
-      client1.stop();
-      return;
-    }
-  }
 }
 
 void loop() {
